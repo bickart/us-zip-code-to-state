@@ -12,7 +12,7 @@ class UsZipCodeToState
 
         $prefix = substr($zipCode, 0, 3);
         if (!isset($this->mapping[$prefix])) {
-            throw new \Exception('No match found for ZIP code with prefix `' . $prefix . '`');
+            throw new \Exception('No match found for ZIP code with prefix `'.$prefix.'`');
         }
 
         return $this->mapping[$prefix];
