@@ -10,6 +10,10 @@ class UsZipCodeToState
             throw new \Exception('Expecting a ZIP code containing five numeric characters');
         }
 
+        if (isset($this->exceptions[$zipCode])) {
+            return $this->exceptions[$zipCode];
+        }
+
         $prefix = substr($zipCode, 0, 3);
         if (!isset($this->mapping[$prefix])) {
             throw new \Exception('No match found for ZIP code with prefix `'.$prefix.'`');
@@ -17,6 +21,19 @@ class UsZipCodeToState
 
         return $this->mapping[$prefix];
     }
+
+    /**
+     * Individual ZIP codes whose state differs from the rest of their three-digit prefix.
+     */
+    private $exceptions = [
+        '06390' => 'NY', // Fishers Island (prefix 063 is CT)
+        '20588' => 'MD', // prefix 205 is DC
+        '20598' => 'VA', // prefix 205 is DC
+        '73960' => 'TX', // Texhoma (prefix 739 is OK)
+        '83414' => 'WY', // Alta (prefix 834 is ID)
+        '96960' => 'MH', // Majuro, Marshall Islands (prefix 969 is GU)
+        '96970' => 'MH', // Ebeye, Marshall Islands (prefix 969 is GU)
+    ];
 
     private $mapping = [
         '005' => 'NY',
